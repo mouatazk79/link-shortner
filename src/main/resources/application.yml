@@ -1,0 +1,48 @@
+spring:
+  application:
+    name:
+      springboot4demo
+  data:
+    web:
+      pageable:
+        default-page-size: 20
+        max-page-size: 100
+    redis:
+      host: localhost
+      port: 6379
+      password:
+      database: 0
+      timeout: 60000
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: root
+    password: password
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id:
+            client-secret:
+            scope:
+              - openid
+              - profile
+              - email
+
+urlshortner:
+  shortlinks:
+    shortUrlKeyLength: 7
+
+security:
+  token-pair:
+    ttl: 1m
+
+jwt:
+  key: V2hUeE1zRjZqZkQ5Q0VHd2tqYlF4N3F2dDExT2pVbktnNQ==
