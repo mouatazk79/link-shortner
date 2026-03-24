@@ -78,7 +78,6 @@ public class ShortLinksService {
            shortLinksRepository.save(existedShortLink.get());
         }
         throw  new CustomException("short link does not exist");
-
     }
 
     @CacheEvict(value = "shortLinks", key = "#shortLinkId")

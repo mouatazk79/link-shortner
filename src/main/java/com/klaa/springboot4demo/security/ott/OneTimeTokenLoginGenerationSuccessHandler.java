@@ -35,7 +35,6 @@ public class OneTimeTokenLoginGenerationSuccessHandler extends AuthCodeAuthentic
         if (authentication instanceof OneTimeTokenAuthentication oneTimeTokenAuthenticationToken){
             handleOneTimeTokenAuthenticationToken(request,response,oneTimeTokenAuthenticationToken);
             return;
-
         }
         super.onAuthenticationSuccess(request, response, authentication);
     }

@@ -15,5 +15,11 @@ public class TokenService {
     public String generateAccessToken(User user){
         return jwtService.generateAccessToken(user);
     }
-    public String generateRefreshToken(User user){ return jwtService.generateRefreshToken(user);}
+    public String generateRefreshToken(User user){
+        return jwtService.generateRefreshToken(user);
+    }
+
+    public String refreshToken(String refreshToken) {
+        return jwtService.refreshToken(refreshToken);
+    }
 }

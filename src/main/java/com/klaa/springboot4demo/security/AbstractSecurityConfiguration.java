@@ -13,7 +13,7 @@ public abstract class AbstractSecurityConfiguration {
     @SneakyThrows
     protected SecurityFilterChain buildWithDefaults(HttpSecurity http) {
 
-        http.csrf(AbstractHttpConfigurer::disable)
+                http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
