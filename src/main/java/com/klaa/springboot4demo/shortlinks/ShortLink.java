@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
@@ -15,7 +16,7 @@ import java.util.UUID;
 @ToString(callSuper=true)
 @EqualsAndHashCode(callSuper=false)
 @Table(name = "shortlinks")
-public class ShortLink extends AbstractJpaVersionedAuditableEntity {
+public class ShortLink extends AbstractJpaVersionedAuditableEntity  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

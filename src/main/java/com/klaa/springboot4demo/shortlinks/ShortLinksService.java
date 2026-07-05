@@ -30,10 +30,10 @@ public class ShortLinksService {
     ShortLinkMapper shortLinkMapper;
     ShortLinksProperties shortLinksProperties;
     @Cacheable(value = "shortLinks", key = "#shortLinkId")
-    public String getShortLinkByShortUrlHash(String shortLinkId){
+    public ShortLink getShortLinkByShortUrlHash(String shortLinkId){
         val existedShortLink=shortLinksRepository.findById(UUID.fromString(shortLinkId));
         if(existedShortLink.isPresent()){
-            return existedShortLink.get().getLongUrl();
+            return existedShortLink.get();
         }
         throw  new CustomException("short link does not exist");
     }
