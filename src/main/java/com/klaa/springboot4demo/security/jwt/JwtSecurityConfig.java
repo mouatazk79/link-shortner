@@ -1,7 +1,9 @@
 package com.klaa.springboot4demo.security.jwt;
 
+import com.klaa.springboot4demo.ratelimiting.filter.RateLimitFilter;
 import com.klaa.springboot4demo.security.AbstractSecurityConfiguration;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationCodeGrantFilter;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -26,10 +29,12 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 @Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class JwtSecurityConfig extends AbstractSecurityConfiguration {
     @Value("${jwt.key}")
     private String jwtKey;
     private static final String JWT_SECURITY_FILTER_CHAIN="jwtSecurityFilterChain";
+    private final RateLimitFilter rateLimitFilter;
 
     @SneakyThrows
     @Bean(JWT_SECURITY_FILTER_CHAIN)
@@ -37,6 +42,7 @@ public class JwtSecurityConfig extends AbstractSecurityConfiguration {
     public SecurityFilterChain jwtSecurityFilterChain(HttpSecurity http,JwtDecoder jwtDecoder){
         http.securityMatcher("/shortlinks/**")
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+                .addFilterBefore(rateLimitFilter, OAuth2AuthorizationCodeGrantFilter.class)
                 .oauth2ResourceServer(oauth2ResourceServer ->
                         oauth2ResourceServer.jwt(jwt ->jwt.decoder(jwtDecoder))
                         );
